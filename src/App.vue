@@ -1,6 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
 <script>
 export default{
     data: function () {
@@ -36,8 +33,11 @@ export default{
                         Home
 					</RouterLink>
                 </li>
-                <li><a class="button-a" target=”_blank” href="https://github.com/federico-rosatelli/biologia">Github Project</a></li>
-                <li><a class="button-a" target=”_blank” href="https://drive.google.com/drive/folders/19RXRHEb-7-O9gaUjXz5ho-Q2_HsbKlEW">Archive</a></li>
+                <li>
+                    <RouterLink to="/">
+                        About Vulgaris
+					</RouterLink>
+                </li>
             </ul>
             <ul class="left">
                 <li>
@@ -57,18 +57,10 @@ export default{
 					</RouterLink>
                 </li>
 
-                <li>
-                    <RouterLink to="/analysis">
-                        Analysis
-					</RouterLink>
-                </li>
-
             </ul>
         </nav>
     </header>
     <RouterView />
-    <br/>
-    <br/>
     <footer>
         <div id="banner" style="overflow:hidden; display: inline-block;">
             <div class="image">
@@ -76,8 +68,11 @@ export default{
             </div>
         </div>
         <p>Authors: Team di Biologia Computazionale 2023, Università La Sapienza<br>
-            <a href="mailto:">bio@bio.it</a>
         </p>
+        <div style="margin-top: 12px;">
+            <a href="mailto:">bio@bio.it</a>
+            <a href="https://github.com/BITSapienza" style="margin-left: 40px;">BIT Sapienza</a>
+        </div>
     </footer>
 </template>
 

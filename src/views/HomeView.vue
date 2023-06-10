@@ -1,5 +1,4 @@
 <script>
-import { marked } from 'marked';
 export default {
 	data: function() {
 		return {
@@ -12,23 +11,27 @@ export default {
         data(){
         },
 	},
-	computed:{
-		compiledMarkdown() {
-			
-			return marked(this.some_data);
-		}
-	},
 	async mounted(){
+		this.loading = true
 		try{
             let response = await this.$axios.get(`/`);
-            this.some_data=response.data.Text
+            this.some_data=response.data
         } catch(e){
-            this.errormsg = e.response.data
+			this.loading = false
+            this.errormsg = e.message
         }
+		this.loading = false
 	}
 }
 </script>
 
 <template>
-	<div v-html="compiledMarkdown"></div>
+	<LoadingSpinner :loading="this.loading"/>
+	<div>
+		{{ this.some_data }}
+	</div>
+	<div v-if="errormsg">
+		Error:
+		<ErrorMsg :msg="errormsg"></ErrorMsg>
+	</div>
 </template>
