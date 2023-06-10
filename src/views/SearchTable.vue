@@ -12,11 +12,10 @@ export default {
             product: null,
             location: null,
             type: "scientific_name",
-            response: []
+            response: [],
         };
     },
     methods: {
-        // ricerca con "stringa input" and "type": taxomID or scientific name
         async nucleotideSearch() {
             this.loading = true;
             this.errormsg = null;
@@ -56,7 +55,16 @@ export default {
           fin.style.visibility = "hidden"
         },
     },
-    components: { LoadingSpinner }
+    components: { LoadingSpinner },
+    async mounted(){
+        
+        let product = this.$route.query.product;
+        if (!product){
+          return
+        }
+        this.product = product
+        this.nucleotideSearch()
+      },
 }
 
 
@@ -103,14 +111,10 @@ export default {
           <th>Qty Proteins</th>
           <th>Qty Products</th>
           <th>Genomes</th>
-          <th>Annotations</th>
-          <th>Transcriptome</th>
-          <th>Sra Wgs</th>
-          <th>Sra Tran</th>
         </tr>
       </thead>
         <tr v-for="item in response" :key="item.TaxId">
-          <td>
+          <td class="clickable">
             {{ item.ScientificName }}
           </td>
 
@@ -127,7 +131,7 @@ export default {
           </td>
 
           <td>
-            <RouterLink :to="'/organism/'+item.TaxId + '/nucleotides'">
+            <RouterLink :to="'/organism/'+item.TaxId + '/proteins'">
               {{ item.QtyProducts >= 9999 ? 9999+"+" : item.QtyProducts}}
             </RouterLink>
           </td>
@@ -151,10 +155,6 @@ export default {
             </div>
             
           </td>
-          <td>{{ item.Annotations }}</td>  <!--link download gff -->
-          <td>{{ item.Trascriptome }}</td> <!--link tsa ncbi  -->
-          <td>{{ item.SraWgs }}</td>
-          <td>{{ item.SraTran }}</td>
         </tr>
     </table>
   </div>

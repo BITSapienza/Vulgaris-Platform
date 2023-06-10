@@ -20,7 +20,7 @@ export default {
         border-radius: 50%;
         box-sizing: border-box;
         animation: rotation 2s linear infinite;
-        position: fixed;
+        position: relative;
     }
 
     @keyframes rotation {

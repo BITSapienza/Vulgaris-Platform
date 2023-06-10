@@ -17,7 +17,7 @@ section, article, header, footer, nav, aside, hgroup { display:block; }
 
 @font-face {
 	font-family: 'SansationRegular';
-	src: url('/css/Sansation_Regular.eot?'),
+	src: url('/css/Sansation_Regular.eot'),
 		url('/css/Sansation_Regular.woff') format('woff'), 
 		url('/css/Sansation_Regular.ttf') format('truetype'), 
 		url('/css/Sansation_Regular.svg#webfontLr2B6u5e') format('svg');
@@ -28,7 +28,7 @@ section, article, header, footer, nav, aside, hgroup { display:block; }
 
 @font-face {
 	font-family: 'SansationBold';
-	src: url('/css/Sansation_Bold.eot?'),
+	src: url('/css/Sansation_Bold.eot'),
 		url('/css/Sansation_Bold.woff') format('woff'), 
 		url('/css/Sansation_Bold.ttf') format('truetype'), 
 		url('/css/Sansation_Bold.svg#webfont8dfDl0fr') format('svg');
@@ -293,8 +293,8 @@ box-shadow: none;
 
 
 footer { 
-width:100%; clear:both; margin:0 0 20px 0; 
-padding:20px;
+width:100%; clear:both; margin:40px 0 20px 0; 
+padding:8px;
 -moz-box-sizing:border-box;
 -webkit-box-sizing:border-box;
 box-sizing:border-box;
@@ -306,6 +306,8 @@ border-radius: 10px;
 -webkit-box-shadow: 0 0 5px #0099FF;
 -moz-box-shadow: 0 0 5px #0099FF;
 box-shadow: 0 0 5px #0099FF;
+position: relative;
+bottom: 0;
 }
 
 footer {
