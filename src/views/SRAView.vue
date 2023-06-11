@@ -98,8 +98,8 @@ export default{
           </div>
           <div class="popup" :id="'popup-'+genome[0].TaxId">
             <div v-if="this.project" class="popup-content">
+              <button v-if="this.project" type="button" class="buttonclose" @click="close(genome[0].TaxId)">Close</button>
               <BioProjComp :data="genome"/>
-              <button type="button" class="popupclose" @click="close(genome[0].TaxId)">Close</button>
             </div>
           </div>
         </td>
@@ -180,7 +180,7 @@ export default{
 
 .popup{
     background: rgba(0, 0, 0, 0.6);
-    position:absolute;
+    position: absolute;
     /* overflow: auto;
     max-height: 100%; */
     top: 10%;
@@ -196,16 +196,16 @@ export default{
 .popup-content{
     overflow-y: auto;
     word-wrap: break-word;
-    overflow-x:visible;
-    top: 20%;
-    bottom: 20%;
-    right: 10%;
-    left: 10%;
-    width: 80%;
+    overflow-x: visible;
+    top: 10%;
+    bottom: 10%;
+    right: 5%;
+    left: 5%;
+    width: 90%;
     color: #ffffff;
     size: 10px;
     box-shadow: 0 0 5px #0099FF;
-    background:rgba(0, 0, 0, 0.815);
+    background:rgba(0, 0, 0, 0.9);
     padding: 2px;
     border-radius: 5px;
     position:fixed;
@@ -232,4 +232,16 @@ export default{
     box-shadow: 6px 6px 29px -4px rgba(0,0,0,0.75);
     cursor: pointer;
 }
+
+
+.buttonclose{
+  position: fixed;
+  top: 2%;
+  right: 5%;
+  background-color: #003399;
+  border-radius: 5px;
+  width:100px;
+  height:50px;
+}
+
 </style>

@@ -315,7 +315,7 @@ export default {
     color: #ffffff;
     size: 10px;
     box-shadow: 0 0 5px #0099FF;
-    background:rgba(0, 0, 0, 0.815);
+    background:rgba(0, 0, 0, 0.9);
     padding: 2px;
     border-radius: 5px;
     position:fixed;
