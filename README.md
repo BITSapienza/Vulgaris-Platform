@@ -31,7 +31,7 @@ The views present in the web application are:
 
 - `OrganismView`:  This Vue code represents a component for displaying organism information, including proteins or nucleotides, with the ability to view detailed data and copy names to the clipboard.
 
-- `SraView`: This Vue code represents a component for displaying genomic information, including the scientific name and the number of associated bio projects. It allows users to view detailed information about a specific genome and if present, the analysis.
+- `SRAView`: This Vue code represents a component for displaying genomic information, including the scientific name and the number of associated bio projects. It allows users to view detailed information about a specific genome and if present, the analysis.
 
 # Vue Components
 Vue components coded for the project are:

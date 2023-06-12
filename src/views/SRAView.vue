@@ -31,19 +31,6 @@ export default{
           this.project = taxId
         },
 
-        plus(count, add) {
-          switch(count) {
-            case ('p'):
-              this.projcount += add
-            case('s'):
-              this.sampcount += add
-            case('e'):
-              this.expcount += add
-            case('r'):
-              this.runcount += add
-          }
-
-        }
     },
     async mounted(){
         this.loading = true
@@ -65,7 +52,6 @@ export default{
         }
     },
 }
-
 
 </script>
 
@@ -106,47 +92,10 @@ export default{
         <td>
           {{ genome.length }}
         </td>
-        <!-- <div>
-            <div class="popup" :id='"popup-"+genome.TaxId'>
-                <div v-if="this.genomeClick" class="popup-content">
-                    <BioProjComp :data="this.genomeClick"/>
-                    <button type="button" class="popupclose" @click="close(genome.TaxId)">Close</button>
-                </div>
-            </div>
-        </div>
-              
-          <td>
-            {{ plus('p', genome.length) }}
-            {{ projcount == 1 ? genome.BioProjects[0].BioProjectId : projcount }}
-          </td>
-
-          <td v-for="bioProject in genome" :key="bioProject.BioProjectId">
-            {{ plus('s', bioProject.BioSamples.length) }}
-            {{ sampcount == 1 ? bioProject.BioSamples[0].BioSampleId : sampcount }}
-          </td>
-          
-          <td v-for="bioProject in genome" :key="bioProject.BioProjectId">
-            <span v-for="bioSample in bioProject.BioSamples" :key="bioSample.BioSampleId">
-              {{ plus('e', bioSample.Experiments.length) }}
-              {{ expcount == 1 ? bioSample.Experiments[0].ExperimentId : expcount }}
-            </span>
-          </td>
-
-          <td v-for="bioProject in genome" :key="bioProject.BioProjectId">
-            <span v-for="bioSample in bioProject.BioSamples" :key="bioSample.BioSampleId">
-              <span v-for="experiment in bioSample.Experiments" :key="experiment.ExperimentId">
-                {{ plus('r', experiment.Runs.length) }}
-                {{ runcount == 1 ? experiment.Runs[0] : runcount }}
-              </span>
-            </span>
-          </td> -->
-
       </tr>
     </table>
   </div>
             
-
-
 </template>
 
 <style>
