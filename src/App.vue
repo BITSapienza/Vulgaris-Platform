@@ -23,8 +23,9 @@ export default{
 </script>
 <template>
     <header>
-        <hgroup>
-            <h1>MicroAlgae DB</h1>
+        <hgroup style="display:flex; margin-top: 5%;">
+            <img src="/images/MicroAlgae_logo.png" alt="Micro Algae Logo" title="Micro Algae Logo" style="width:10%; height: auto; margin-top:-30px;">
+            <h1>Vulgaris MicroAlgae</h1>
         </hgroup>
         <nav>
             <ul class="right">

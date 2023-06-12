@@ -163,46 +163,49 @@ export default {
                 
             </div>
         </div>
-        <div v-if="this.response.Products && this.response.Products.length > 0">
-            <div class="title-down">
-                Products and occurences
-            </div>
-            <div style="display: flex;">
-                <div class="product">
-                    <div v-for="prod in this.response.Products" style="display: flex;">
-                        <div class="copyToken clickable" @click="clip(prod.ProductName)">
-                            <h2>
-                                {{ prod.ProductName }}
-                            </h2>
-                        </div>
-                        <h3 style="margin-left: 5%;">
-                            {{ prod.QtyProduct }}
-                        </h3>
-                    </div>
+        <div class="block-organism">
+
+            <div v-if="this.response.Products && this.response.Products.length > 0">
+                <div class="title-down">
+                    Products and occurences
                 </div>
-                <div class="popup-clip">
-                    <span class="popuptext-clip" id="myPopup-clip">Product Copied to ClipBoard!</span>
-                </div>
-            </div>
-        </div>
-        <div v-if="this.response.Country && this.response.Country.length > 0">
-            <div class="title-down">
-                Country
-            </div>
-            <div style="display: flex;">
-                <div class="product">
-                    <div v-for="prod in this.response.Country" style="display: flex;">
-                        <div class="clickable">
-                            <h2>
-                                <a :href="'https://www.google.com/maps/place/'+prod.CountryName+'/'" target=”_blank”>
-                                    {{ prod.CountryName }}
-                                </a>
-                            </h2>
+                <div style="display: flex;">
+                    <div class="product">
+                        <div v-for="prod in this.response.Products" style="display: flex;">
+                            <div class="copyToken clickable" @click="clip(prod.ProductName)">
+                                <h2>
+                                    {{ prod.ProductName }}
+                                </h2>
+                            </div>
+                            <h3 style="margin-left: auto; margin-right: 15px;">
+                                {{ prod.QtyProduct }}
+                            </h3>
                         </div>
                     </div>
+                    <div class="popup-clip">
+                        <span class="popuptext-clip" id="myPopup-clip">Product Copied to ClipBoard!</span>
+                    </div>
                 </div>
-                <div class="popup-clip">
-                    <span class="popuptext-clip" id="myPopup-clip">Product Copied to ClipBoard!</span>
+            </div>
+            <div v-if="this.response.Country && this.response.Country.length > 0">
+                <div class="title-down-right">
+                    Country
+                </div>
+                <div style="display: flex;">
+                    <div class="country">
+                        <div v-for="prod in this.response.Country" style="display: flex;">
+                            <div class="clickable">
+                                <h2>
+                                    <a :href="'https://www.google.com/maps/place/'+prod.CountryName+'/'" target=”_blank”>
+                                        {{ prod.CountryName }}
+                                    </a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popup-clip">
+                        <span class="popuptext-clip" id="myPopup-clip">Product Copied to ClipBoard!</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -243,6 +246,14 @@ export default {
     margin-top: 5%;
     font-weight: bold;
 }
+
+.title-down-right{
+    bottom: -45px;
+    margin-top: 5%;
+    font-weight: bold;
+    margin-left: 10%;
+}
+
 .title-left{
     margin-right: auto;
     font-weight: bold;
@@ -277,7 +288,20 @@ export default {
     border: 2px solid black;
 }
 .product {
-    width: 50%;
+    width: 90%;
+    max-height: 500px;
+    min-height: 50px;
+    justify-content: left;
+    align-items: center;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid black;
+
+}
+
+.country {
+    width: 90%;
+    margin-left: auto;
     max-height: 500px;
     min-height: 50px;
     justify-content: left;
