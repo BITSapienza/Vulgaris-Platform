@@ -35,7 +35,7 @@ export default{
 					</RouterLink>
                 </li>
                 <li>
-                    <RouterLink to="/">
+                    <RouterLink to="/about">
                         About Vulgaris
 					</RouterLink>
                 </li>
