@@ -14,12 +14,14 @@ export default {
             type: "scientific_name",
             response: [],
             csvData: [],
+            nameCsv: "",
         };
     },
     methods: {
         async nucleotideSearch() {
             this.loading = true;
             this.errormsg = null;
+            this.nameCsv = "";
             try {
                 //  
                 let response = await this.$axios.get("/taxon_term", {
@@ -38,6 +40,16 @@ export default {
                 this.errormsg = e.response.data;
                 this.response = []
             }
+            if(this.search){
+              this.nameCsv += "."+this.search
+            }
+            if(this.product){
+              this.nameCsv += "."+this.product
+            }
+            if(this.location){
+              this.nameCsv += "."+this.location
+            }
+            this.nameCsv = this.nameCsv.replace(/\s+/g, '_').toLowerCase()
             this.loading = false;
         },
         generateCSVData(data){
@@ -125,7 +137,7 @@ export default {
         <div class="download-text clickable">
           <download-csv
             :data="this.csvData"
-            :name="'VULGARIS.'+this.search.replace(/\s+/g, '_').toLowerCase()+'.csv'">
+            :name="'VULGARIS'+ this.nameCsv +'.csv'">
             Download Data
           </download-csv>
         </div>
