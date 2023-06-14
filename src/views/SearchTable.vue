@@ -13,6 +13,7 @@ export default {
             location: null,
             type: "scientific_name",
             response: [],
+            csvData: [],
         };
     },
     methods: {
@@ -30,6 +31,7 @@ export default {
                     }
                 });
                 this.response = response.data;
+                this.generateCSVData(this.response)
             }
             catch (e) {
                 this.loading = false;
@@ -37,6 +39,21 @@ export default {
                 this.response = []
             }
             this.loading = false;
+        },
+        generateCSVData(data){
+            let newcsvdata = []
+            for (let i = 0; i < data.length; i++) {
+                let newDataImport = {
+                  ScientificName: data[i].ScientificName,
+                  TaxId: data[i].TaxId,
+                  QtyNucleotides: data[i].QtyNucleotides,
+                  QtyProteins: data[i].QtyProteins,
+                  QtyProducts: data[i].QtyProducts,
+                  GenomesLink: data[i].Genomes[0] ? data[i].Genomes[0].Link : ""
+                }
+              newcsvdata.push(newDataImport)
+            }
+            this.csvData = newcsvdata
         },
         mouseOver(id,item){
           if (!item || item.length == 0){
@@ -100,8 +117,19 @@ export default {
   <LoadingSpinner :loading="this.loading"/>
   <ErrorMsg v-if="errormsg" :msg="errormsg"></ErrorMsg>
   <div v-if="response.length > 0">
-    <div>
-      <h1>{{ response.length }} Results</h1>
+    <div style="display: flex; gap: 20px;">
+      <div>
+        <h1>{{ response.length }} Results</h1>
+      </div>
+      <div class="download-button">
+        <div class="download-text clickable">
+          <download-csv
+            :data="this.csvData"
+            :name="'VULGARIS.'+this.search.replace(/\s+/g, '_').toLowerCase()+'.csv'">
+            Download Data
+          </download-csv>
+        </div>
+      </div>
     </div>
     <table id="table">
       <thead>
@@ -240,5 +268,24 @@ button:hover {
 
 .dropdown-genome:hover .dropdown-content-genome {
   display: block;
+}
+
+.download-text {
+  padding: 10px;
+}
+
+.download-button {
+  cursor: pointer;
+  margin-top: -10px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 10px;
+  width: 160px;
+  box-shadow: 0 0 5px #0099FF;
+  background: rgba(0,0,0,0.6);
+  margin-bottom: 10px;
+}
+.download-button:hover {
+  box-shadow: 0 0 8px #0099FF;
 }
 </style>
