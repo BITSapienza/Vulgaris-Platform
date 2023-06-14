@@ -1,6 +1,6 @@
 import {createApp, reactive} from 'vue'
 // import { BModal, BButton } from 'bootstrap-vue-3'
-
+import JsonCSV from 'vue-json-csv'
 import App from './App.vue'
 import router from './router'
 import axios from './services/axios.js';
@@ -16,6 +16,7 @@ import './assets/dropdown.css'
 import './assets/monitor.css'
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;
+app.component("download-csv", JsonCSV);
 app.component("ErrorMsg", ErrorMsg);
 app.component("NucleoComp", NucleoComp);
 app.component("LoadingSpinner", LoadingSpinner);

@@ -6,6 +6,7 @@ export default{
             loading: false,
             genomes: null,
             project: null,
+            csvData: [],
         };
     },
     methods: {
@@ -30,6 +31,31 @@ export default{
           document.getElementById("popup-"+taxId).style.display = "flex"
           this.project = taxId
         },
+        generateCSVData(data){
+            let newcsvdata = []
+            for (let i = 0; i < data.length; i++) {
+                let proj = data[i]
+                for (let j = 0; j < proj.BioSamples.length; j++) {
+                    let samp = proj.BioSamples[j]
+                    for (let k = 0; k < samp.Experiments.length; k++) {
+                        let exp = samp.Experiments[k]
+                        
+                        let newDataImport = {
+                            ScientificName: proj.ScientificName ? proj.ScientificName : proj.TaxId,
+                            TaxId : proj.TaxId,
+                            BioProject : proj.BioProjectId,
+                            Sample : samp.BioSampleId,
+                            Experiment : exp.ExperimentId,
+                        }
+                        newcsvdata.push(newDataImport)
+                      
+                    }
+                  
+                }
+                
+            }
+            this.csvData = newcsvdata
+        },
 
     },
     async mounted(){
@@ -37,6 +63,7 @@ export default{
         try{
             let response = await this.$axios.get(`/analysis`);
             let projects = response.data
+            this.generateCSVData(projects)
             let gen = {}
             projects.forEach(proj => {
               if(!gen[proj.TaxId]){
@@ -58,6 +85,9 @@ export default{
 <template>
 <br/>
 <br/>
+<div class="TitlePageHome">
+  SRA Analysis
+</div>
 <br/>
 <br/>
   <LoadingSpinner :loading="this.loading"/>
@@ -65,9 +95,20 @@ export default{
 		Error:
 		<ErrorMsg :msg="errormsg"></ErrorMsg>
 	</div>
-  <div v-if="this.genomes">
-    <div>
-      <h1>{{ Object.keys(this.genomes).length }} Results</h1>
+  <div v-if="this.genomes && this.csvData">
+    <div style="display: flex; gap: 20px;">
+      <div>
+        <h1>{{ Object.keys(this.genomes).length }} Results</h1>
+      </div>
+      <div class="download-button">
+        <div class="download-text clickable">
+          <download-csv
+            :data="this.csvData"
+            :name="'VULGARIS.SRA_DATA.csv'">
+            Download Data
+          </download-csv>
+        </div>
+      </div>
     </div>
     <table id="table">
       <thead>
