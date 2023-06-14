@@ -11,8 +11,8 @@ export default {
             nucleo:null,
             dataArray: [],
             otherRouterLink:null,
-            taxonomy:null
-
+            taxonomy:null,
+            countrySet: {},
 		}
 	},
     
@@ -20,7 +20,7 @@ export default {
         async refresh() {
             try{
                 let response = await this.$axios.get(`/organism/${this.taxId}/${this.typeof}`);
-                this.response=response.data
+                this.response= response.data
             } catch(e){
                 this.errormsg = e.response.data
             }
@@ -36,6 +36,7 @@ export default {
             this.dataArray = this.typeof == "proteins" ? this.response.Proteins : this.response.Nucleotides
             let datalink = this.typeof == 'nucleotides' ? '/proteins': '/nucleotides'
             this.otherRouterLink = '/organism/' + this.taxId + datalink
+            this.getCountry()
         },
         async findLocus(locus){
             this.loading = true
@@ -60,6 +61,17 @@ export default {
             var popup = document.getElementById("myPopup-clip");
             popup.style.visibility = "visible"
             setTimeout(() => popup.style.visibility = "hidden" , 1200);
+        },
+        getCountry() {
+            var countrySet = {}
+            this.response.Country.forEach(element => {
+                if (!countrySet[element.CountryName]){
+                    countrySet[element.CountryName] = 0
+                }
+                countrySet[element.CountryName] += 1
+                //array.push(element.CountryName)
+            });
+            this.countrySet = countrySet
         }
     },
     mounted(){
@@ -164,7 +176,6 @@ export default {
             </div>
         </div>
         <div class="block-organism">
-
             <div v-if="this.response.Products && this.response.Products.length > 0">
                 <div class="title-down">
                     Products and occurences
@@ -193,11 +204,11 @@ export default {
                 </div>
                 <div style="display: flex;">
                     <div class="country">
-                        <div v-for="prod in this.response.Country" style="display: flex;">
+                        <div v-for="(count, country) in this.countrySet" style="display: flex;">
                             <div class="clickable">
                                 <h2>
-                                    <a :href="'https://www.google.com/maps/place/'+prod.CountryName+'/'" target=”_blank”>
-                                        {{ prod.CountryName }}
+                                    <a :href="'https://www.google.com/maps/place/'+ country +'/'" target=”_blank”>
+                                        {{ country }} {{   count   }}
                                     </a>
                                 </h2>
                             </div>
@@ -237,6 +248,7 @@ export default {
 }
 
 .clickable:hover, .clickable:focus, .clickable:active { color:#ffcc00; }
+
 
 .block-organism {
     display: flex;
@@ -297,19 +309,22 @@ export default {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid black;
 
-}
+} 
+/* vedete il width al 90% su product e country quello resta cosi */
+/* il problema sta nel margin-top di country */
 
 .country {
     width: 90%;
+    margin-top: 10px;
     margin-left: auto;
     max-height: 500px;
     min-height: 50px;
+    min-width: 100px;
     justify-content: left;
     align-items: center;
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid black;
-
 }
 
 .popup{

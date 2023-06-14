@@ -39,15 +39,18 @@ export default{
                     let samp = proj.BioSamples[j]
                     for (let k = 0; k < samp.Experiments.length; k++) {
                         let exp = samp.Experiments[k]
-                        
-                        let newDataImport = {
-                            ScientificName: proj.ScientificName ? proj.ScientificName : proj.TaxId,
-                            TaxId : proj.TaxId,
-                            BioProject : proj.BioProjectId,
-                            Sample : samp.BioSampleId,
-                            Experiment : exp.ExperimentId,
+                        for (let l = 0; l < exp.Runs.length; l++) {
+                          let run = exp.Runs[l]
+                          let newDataImport = {
+                              ScientificName: proj.ScientificName ? proj.ScientificName : proj.TaxId,
+                              TaxId : proj.TaxId,
+                              BioProject : proj.BioProjectId,
+                              Sample : samp.BioSampleId,
+                              Experiment : exp.ExperimentId,
+                              Run : run
+                          }
+                          newcsvdata.push(newDataImport)
                         }
-                        newcsvdata.push(newDataImport)
                       
                     }
                   
@@ -120,7 +123,7 @@ export default{
       <tr v-for="genome in this.genomes" :key="genome.TaxId">
 
         <td class="clickable">
-          <div @click="openModal(genome[0].TaxId)">
+          <div @click="openModal(genome[0].TaxId)" style="cursor: pointer;">
             {{ genome[0].ScientificName ? genome[0].ScientificName : genome[0].TaxId }}
           </div>
           <div class="popup" :id="'popup-'+genome[0].TaxId">

@@ -15,36 +15,36 @@ export default {
         <div class="origin">
             BioProject: ({{ proj.BioSamples.length }})
         </div>
-        <div class="clickable">
+        <a :href="'https://www.ncbi.nlm.nih.gov/bioproject/' + proj.BioProjectId" target = "_blank">
             {{ proj.BioProjectId }}
-        </div>
+        </a>
         <ul>
             <tr>
                 <td v-for="sample in proj.BioSamples">
                     <div class="origin">
                         BioSample: ({{ sample.Experiments.length }})
                     </div>
-                    <div class="clickable">
+                    <a :href="'https://www.ncbi.nlm.nih.gov/biosample/' + sample.BioSampleId" target = "_blank">
                         {{ sample.BioSampleId }}
-                    </div>
+                    </a>
                     <ul>
                         <tr>
                             <td v-for="exp in sample.Experiments">
                                 <div class="origin">
                                     Experiment: ({{ exp.Runs.length }})
                                 </div>
-                                <div class="clickable">
+                                <a :href="'https://www.ncbi.nlm.nih.gov/sra/' + exp.ExperimentId" target = "_blank">
                                     {{ exp.ExperimentId }}
-                                </div>
+                                </a>
                                 <ul v-for="run in exp.Runs">
                                     <tr>
                                         <td>
                                             <div class="origin">
                                                 Run:
                                             </div>
-                                            <div class="clickable">
+                                            <a :href="'https://trace.ncbi.nlm.nih.gov/Traces?run=' + run" target = "_blank">
                                                 {{ run }}
-                                            </div>
+                                            </a>
                                         </td>
                                     </tr>
                                 </ul>
