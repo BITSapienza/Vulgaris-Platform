@@ -68,7 +68,14 @@ export default{
             let projects = response.data
             this.generateCSVData(projects)
             let gen = {}
+            console.log(projects);
             projects.forEach(proj => {
+              if(proj.BioProjectId == "PRJNA496045"){
+                proj.ImagesPath = ["/images/heatmap_degs.png","/images/volcanoPlot.png"]
+              }
+              if(proj.BioProjectId == "PRJNA389600"){
+                proj.ImagesPath = ["/images/heatmap_degs_pico.png","/images/volcanoPlot_pico.png"]
+              }
               if(!gen[proj.TaxId]){
                 gen[proj.TaxId] = []
               }

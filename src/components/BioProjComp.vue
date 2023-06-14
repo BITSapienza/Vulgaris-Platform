@@ -54,9 +54,16 @@ export default {
                 </td>
             </tr>
         </ul>
-        <div v-if="proj.ImagesPath && proj.ImagesPath.length > 0" class="immagini">
+        <div v-if="proj.ImagesPath && proj.ImagesPath.length > 0" style="margin-top: 40px;">
+            HeatMap & Volcano Images of the BioProject {{ proj.BioProjectId }}
+            <div>
+                 <span class="span-underline" style="color: pink;">pink</span>: case <span class="span-underline" style="color: blue; margin-left: 20px;">blu</span>:control
+            </div>
+        </div>
+        <div v-if="proj.ImagesPath && proj.ImagesPath.length > 0" style="display: flex; gap: 50px;">
+            
             <div v-for="img in proj.ImagesPath">
-                <img :src="img" alt="Prova">
+                <img class="projimg" :src="img" alt="Prova">
             </div>
         </div>
     </ul>
@@ -66,5 +73,14 @@ export default {
 <style>
 .origin{
     color: rgb(172, 172, 172);
+}
+.projimg {
+    width: 600px;
+    height: 600px;
+}
+
+.projimg:hover{
+    width: 800px;
+    height: 800px;
 }
 </style>
