@@ -315,7 +315,4 @@ button:hover {
   color: rgb(255, 255, 255);
   background: rgba(0, 0, 0, 0.397);
 }
-.input:focus{
-  color: rgba(0, 0, 0, 0.397);
-}
 </style>
