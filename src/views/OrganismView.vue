@@ -36,7 +36,7 @@ export default {
             this.dataArray = this.typeof == "proteins" ? this.response.Proteins : this.response.Nucleotides
             let datalink = this.typeof == 'nucleotides' ? '/proteins': '/nucleotides'
             this.otherRouterLink = '/organism/' + this.taxId + datalink
-            this.getCountry()
+            // this.getCountry()
         },
         async findLocus(locus){
             this.loading = true
@@ -49,11 +49,11 @@ export default {
             } catch(e){
                 this.errormsg = e.response.data
             }
-            document.getElementById("popup-"+locus).style.display = "flex"
+            document.getElementById("popup").style.display = "flex"
             this.loading = false
         },
-        close(locus){
-            document.getElementById("popup-"+locus).style.display = "none"
+        close(){
+            document.getElementById("popup").style.display = "none"
             this.nucleo = null
         },
         clip(name){
@@ -62,17 +62,17 @@ export default {
             popup.style.visibility = "visible"
             setTimeout(() => popup.style.visibility = "hidden" , 1200);
         },
-        getCountry() {
-            var countrySet = {}
-            this.response.Country.forEach(element => {
-                if (!countrySet[element.CountryName]){
-                    countrySet[element.CountryName] = 0
-                }
-                countrySet[element.CountryName] += 1
-                //array.push(element.CountryName)
-            });
-            this.countrySet = countrySet
-        }
+        // getCountry() {
+        //     var countrySet = {}
+        //     this.response.Country.forEach(element => {
+        //         if (!countrySet[element.CountryName]){
+        //             countrySet[element.CountryName] = 0
+        //         }
+        //         countrySet[element.CountryName] += 1
+        //         //array.push(element.CountryName)
+        //     });
+        //     this.countrySet = countrySet
+        // }
     },
     mounted(){
         this.taxId = this.$route.params.taxid;
@@ -124,14 +124,11 @@ export default {
                         <div @click="findLocus(item.GBSeq_locus)" class="clickable">
                             {{ item.GBSeq_locus }}
                         </div>
-                        <div>
-                            <div class="popup" :id='"popup-"+item.GBSeq_locus'>
-                                <div v-if="this.nucleo" class="popup-content">
-                                    <NucleoComp :data="this.nucleo"/>
-                                    <button type="button" class="popupclose" @click="close(item.GBSeq_locus)">Close</button>
-                                </div>
-                            </div>
-                            
+                    </div>
+                    <div class="popup" id="popup">
+                        <div v-if="this.nucleo" class="popup-content">
+                            <NucleoComp :data="this.nucleo"/>
+                            <button type="button" class="popupclose" @click="close()">Close</button>
                         </div>
                     </div>
                 </ul>
