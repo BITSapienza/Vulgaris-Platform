@@ -113,11 +113,15 @@ export default {
       </select>
     </div>
     <div class="input">
-      <input type="text" id="search-input" placeholder="Input here" v-model="search" v-on:keyup.enter="nucleotideSearch()"/>
-      <input type="text" id="search-input" placeholder="Filter for product" v-model="product" v-on:keyup.enter="nucleotideSearch()"/>
-      <input type="text" id="search-input" placeholder="Filter for location" v-model="location" v-on:keyup.enter="nucleotideSearch()"/>
-      <button type="button" @click="nucleotideSearch()"> Search</button>
+      <!-- wait si puo rendere dinamico che si puo fare diretto con vue esatto-->
+      <input type="text" class="search-input" id="search-input1" :placeholder="this.type == 'scientific_name' ? 'Input Scientific Name' : 'Input Taxonomy Id'" v-model="search" v-on:keyup.enter="nucleotideSearch()"/>
+      <br><br><br>
+      <input type="text" class="search-input" id="search-input2" placeholder="Filter for product" v-model="product" v-on:keyup.enter="nucleotideSearch()"/>
+      <input type="text" class="search-input" id="search-input3" placeholder="Filter for location" v-model="location" v-on:keyup.enter="nucleotideSearch()"/>
     </div>
+  </div>
+  <div>
+    <button type="button" @click="nucleotideSearch()"> Search</button>
   </div>
 
 
@@ -206,6 +210,7 @@ export default {
 <style>
 .input {
   margin-bottom: 10px;
+
 }
 
 .dropdown {
@@ -299,5 +304,18 @@ button:hover {
 }
 .download-button:hover {
   box-shadow: 0 0 8px #0099FF;
+}
+
+.search-input{
+  color: rgb(166, 166, 166);
+  background: rgba(0, 0, 0, 0.397);
+}
+
+#dropdown{
+  color: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.397);
+}
+.input:focus{
+  color: rgba(0, 0, 0, 0.397);
 }
 </style>

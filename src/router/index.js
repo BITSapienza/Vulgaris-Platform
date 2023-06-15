@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
+import HelpView from '../views/HelpView.vue'
+import ContactsView from '../views/ContactsView.vue'
 import Taxonomy from '../views/TaxonomyView.vue'
 import SearchTable from '../views/SearchTable.vue'
 import OrganismView from '../views/OrganismView.vue'
@@ -11,7 +12,8 @@ const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{ path: '/', component: HomeView },
-		{ path: '/about', component: AboutView },
+		{ path: '/help', component: HelpView },
+		{ path: '/contacts', component: ContactsView },
 		{ path: '/taxonomy', component: Taxonomy },
 		{ path: '/taxonomy/:taxid', component: Taxonomy },
 		{ path: '/taxon', component: SearchTable },
