@@ -53,6 +53,7 @@ export default {
             this.loading = false
         },
         close(locus){
+            this.response = null
             document.getElementById("popup-"+locus).style.display = "none"
             this.nucleo = null
         },

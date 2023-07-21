@@ -15,6 +15,7 @@ export default {
             response: [],
             csvData: [],
             nameCsv: "",
+            moreCount: 10,
         };
     },
     methods: {
@@ -22,6 +23,7 @@ export default {
             this.loading = true;
             this.errormsg = null;
             this.nameCsv = "";
+            this.moreCount = 10;
             try {
                 //  
                 let response = await this.$axios.get("/taxon_term", {
@@ -33,6 +35,7 @@ export default {
                     }
                 });
                 this.response = response.data;
+                this.responseCut = this.response.slice(0, this.moreCount > this.response.length ? this.response.length : this.moreCount);    
                 this.generateCSVData(this.response)
             }
             catch (e) {
@@ -67,22 +70,12 @@ export default {
             }
             this.csvData = newcsvdata
         },
-        mouseOver(id,item){
-          if (!item || item.length == 0){
-            return
-          }
-          let fin = document.getElementById(id)
-          console.log(fin);
-          fin.style.visibility = "visible"
+        
+        updateCuts(){
+            this.moreCount += 10
+            this.responseCut = this.response.slice(0, this.moreCount > this.response.length ? this.response.length : this.moreCount);
         },
-        mouseNotOver(id,item){
-          if (!item || item.length == 0){
-            return
-          }
-          let fin = document.getElementById(id)
-          console.log(fin);
-          fin.style.visibility = "hidden"
-        },
+
     },
     components: { LoadingSpinner },
     async mounted(){
@@ -95,7 +88,6 @@ export default {
         this.nucleotideSearch()
       },
 }
-
 
 </script>
 
@@ -113,7 +105,6 @@ export default {
       </select>
     </div>
     <div class="input">
-      <!-- wait si puo rendere dinamico che si puo fare diretto con vue esatto-->
       <input type="text" class="search-input" id="search-input1" :placeholder="this.type == 'scientific_name' ? 'Input Scientific Name' : 'Input Taxonomy Id'" v-model="search" v-on:keyup.enter="nucleotideSearch()"/>
       <br><br><br>
       <input type="text" class="search-input" id="search-input2" placeholder="Filter for product" v-model="product" v-on:keyup.enter="nucleotideSearch()"/>
@@ -134,10 +125,10 @@ export default {
   <ErrorMsg v-if="errormsg" :msg="errormsg"></ErrorMsg>
   <div v-if="response.length > 0">
     <div style="display: flex; gap: 20px;">
-      <div>
+      <div class="result-button-length">
         <h1>{{ response.length }} Results</h1>
       </div>
-      <div class="download-button">
+      <div class="download-button" id="download-button">
         <div class="download-text clickable">
           <download-csv
             :data="this.csvData"
@@ -147,60 +138,12 @@ export default {
         </div>
       </div>
     </div>
-    <table id="table">
-      <thead>
-        <tr>
-          <th>Scientific Name</th>
-          <th>Qty Nucleotides</th>
-          <th>Qty Proteins</th>
-          <th>Qty Products</th>
-          <th>Genomes</th>
-        </tr>
-      </thead>
-        <tr v-for="item in response" :key="item.TaxId">
-          <td class="clickable">
-            {{ item.ScientificName }}
-          </td>
-
-          <td>
-            <RouterLink :to="'/organism/'+item.TaxId + '/nucleotides'">
-              {{ item.QtyNucleotides >= 9999 ? 9999+"+" : item.QtyNucleotides}}
-            </RouterLink>
-          </td>
-
-          <td>
-            <RouterLink :to="'/organism/'+item.TaxId + '/proteins'">
-              {{ item.QtyProteins >= 9999 ? 9999+"+" : item.QtyProteins}}
-            </RouterLink>
-          </td>
-
-          <td>
-            <RouterLink :to="'/organism/'+item.TaxId + '/proteins'">
-              {{ item.QtyProducts >= 9999 ? 9999+"+" : item.QtyProducts}}
-            </RouterLink>
-          </td>
-            
-          <td @mouseleave="mouseNotOver('genome-'+item.TaxId,item.Genomes)" @mouseover="mouseOver('genome-'+item.TaxId,item.Genomes)">
-            {{ !item.Genomes || item.Genomes.length > 0 ? 'Link' : '-' }}
-            <div class="dropdown-genome">
-              <div :id="'genome-'+item.TaxId" class="dropdown-content-genome">
-                <a v-if="item.Genomes && item.Genomes.length > 0" :href="item.Genomes[0].Link" target=”_blank”>
-                  <div :style="item.Genomes[0].GBFF ? 'background-color:green;' : 'background-color:red;'">
-                    GCFF
-                  </div>
-                  <div :style="item.Genomes[0].FNA ? 'background-color:green;' : 'background-color:red;'">
-                    FNA
-                  </div>
-                  <div :style="item.Genomes[0].GFF ? 'background-color:green;' : 'background-color:red;'">
-                    GFF
-                  </div>
-                </a>
-              </div>
-            </div>
-            
-          </td>
-        </tr>
-    </table>
+    <TableComp :data="this.responseCut"/>
+    <div v-if="this.response.length > this.moreCount" class="load-more clickable">
+        <h1 @click="updateCuts()">
+            load more...
+        </h1>
+    </div>
   </div>
 
 
@@ -234,30 +177,8 @@ button:hover {
 .row{
     display: flex;
     gap: 5px;
-   }
-   #table {
-    border-collapse: collapse;
-    width: 100%;
-   }
-   #table td, #table th {
-    border: 1px solid #6cace1;
-    padding: 20px;
-    align-content: center;
-   }
-   #table .title{
-     font-size: 25px;
-     background-color: #999999;
-     text-align: center;
-   }
-   /* #table tr:nth-child(even){background-color: #88a3f7;} */
-   table tr:hover {background-color: rgb(134, 220, 239,.18);}
-   #table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #04aa6d;
-    
-   }
+}
+
 
 .input input[type="text"] {
     width: 40%;
@@ -268,23 +189,10 @@ button:hover {
     box-sizing:border-box;
 }
 
-.dropdown-genome {
-  position: relative;
-  display: block;
-  margin-right: 25px;
-}
-
-.dropdown-content-genome {
-  visibility: hidden;
-  position: absolute;
-  min-width: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  align-content: center;
-}
-
-.dropdown-genome:hover .dropdown-content-genome {
-  display: block;
+.result-button-length{
+    position: fixed;
+    font-weight: bold;
+    margin-left: -190px;
 }
 
 .download-text {
@@ -292,16 +200,18 @@ button:hover {
 }
 
 .download-button {
+  position: fixed;
   cursor: pointer;
-  margin-top: -10px;
+  margin-top: 30px;
   font-weight: bold;
+  margin-left: -190px;
   font-size: 20px;
-  border-radius: 10px;
-  width: 160px;
+  border-radius: 7px;
+  width: 165px;
   box-shadow: 0 0 5px #0099FF;
   background: rgba(0,0,0,0.6);
-  margin-bottom: 10px;
 }
+
 .download-button:hover {
   box-shadow: 0 0 8px #0099FF;
 }
@@ -315,4 +225,15 @@ button:hover {
   color: rgb(255, 255, 255);
   background: rgba(0, 0, 0, 0.397);
 }
+
+.load-more {
+    display: flex;
+    align-items:center;
+    justify-content: space-around
+}
+
+.load-more:hover {
+    cursor: pointer;
+}
+
 </style>
