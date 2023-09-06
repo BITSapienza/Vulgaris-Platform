@@ -17,7 +17,7 @@ export default {
             <ul>
                 {{ feature.GBFeatureKey }}
                 <ul v-for="quals in feature.GBFeatureQuals">
-                    <div v-if="quals.GBQualifierName != 'transcription'" style="display: flex;">
+                    <div v-if="quals.GBQualifierName != 'transcription' || quals.GBQualifierName != 'translation'" style="display: flex;">
                         {{ quals.GBQualifierName }}:
                         <RouterLink v-if="quals.GBQualifierName == 'product'" :to="'/taxon?product='+quals.GBQualifierValue">
                             {{ quals.GBQualifierValue }}

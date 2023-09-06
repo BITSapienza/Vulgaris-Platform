@@ -1,16 +1,16 @@
-<dropdown class="my-dropdown-toggle"
+<!-- <dropdown class="my-dropdown-toggle"
           :options="arrayOfObjects" 
           :selected="object" 
           v-on:updateOption="methodToRunOnSelect" 
           :placeholder="'Select an Item'"
           :closeOnOutsideClick="boolean">
-</dropdown>
+</dropdown> -->
 
 <script>
     // import AppDropdown from './components/AppDropdown.vue'
     // import AppDropdownContent from './components/AppDropdownContent.vue'
     // import AppDropdownItem from './components/AppDropdownItem.vue'
-    import dropdown from 'vue-dropdowns';
+    // import dropdown from 'vue-dropdowns';
     
 export default{
     data: function () {
@@ -26,9 +26,9 @@ export default{
             }            
         }
     },
-    components: {
-            'dropdown': dropdown,
-        },
+    // components: {
+    //         'dropdown': dropdown,
+    //     },
 
     methods:{
         async info(){

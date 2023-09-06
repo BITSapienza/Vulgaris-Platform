@@ -54,6 +54,7 @@ export default {
         },
         close(){
             document.getElementById("popup").style.display = "none"
+
             this.nucleo = null
         },
         clip(name){
